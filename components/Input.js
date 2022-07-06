@@ -27,13 +27,13 @@ export default function Input() {
     const [input, setInput] = useState("");
     const [loading, setLoading] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
-    const filePickerRef = useRef(null);
+    const filePickerReference = useRef(null);
     const [showEmojis, setShowEmojis] = useState(false);
     
     const sendPost = async () => {
         if (loading) return;
         setLoading(true);
-        const docRef = await addDoc(collection(db, "posts"), {
+        const docReference = await addDoc(collection(db, "posts"), {
             id: session.user.uid,
             username: session.user.name,
             userImg: session.user.image,
@@ -41,11 +41,11 @@ export default function Input() {
             text: input,
             timestamp: serverTimestamp(),
         });
-        const imageRef = ref(storage, `posts/${docRef.id}/image`);
+        const imageRef = ref(storage, `posts/${docReference.id}/image`);
         if (selectedFile) {
             await uploadString(imageRef, selectedFile, "data_url").then(async () => {
                 const downloadURL = await getDownloadURL(imageRef);
-                await updateDoc(doc(db, "posts", docRef.id), {
+                await updateDoc(doc(db, "posts", docReference.id), {
                     image: downloadURL,
                 });
             });
@@ -112,11 +112,11 @@ export default function Input() {
                 {!loading && (
                     <div className="flex items-center justify-between pt-2.5">
                         <div className="flex items-center">
-                            <div className="icon" onClick={() => filePickerRef.current.click()}>
+                            <div className="icon" onClick={() => filePickerReference.current.click()}>
                                 <PhotographIcon className="text-[#1d9bf0] h-[22px]" />
                                 <input
                                     type="file"
-                                    ref={filePickerRef}
+                                    ref={filePickerReference}
                                     hidden
                                     onChange={addImageToPost}
                                 />
