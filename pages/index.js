@@ -38,7 +38,7 @@ export async function getServerSideProps(context) {
     const trendingResults = await fetch("https://jsonkeeper.com/b/NKEV").then(
         (res) => res.json()
     );
-    const followResults = await fetch("https://jsonkeeper.com/b/WWMJ").then(
+    const followResults = await fetch("https://jsonkeeper.com/b/S9TQ").then(
         (res) => res.json()
     );
     const providers = await getProviders();
